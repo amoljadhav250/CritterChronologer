@@ -1,8 +1,12 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.data.Customer;
+import com.udacity.jdnd.course3.critter.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -16,14 +20,31 @@ import java.util.Set;
 @RequestMapping("/user")
 public class UserController {
 
+    UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-        throw new UnsupportedOperationException();
+        Customer customer = new Customer();
+        customer.setName(customerDTO.getName());
+        customer.setPhoneNumber(customerDTO.getPhoneNumber());
+        customer.setNotes(customerDTO.getNotes());
+        userService.saveCustomer(customer);
+        return customerDTO;
     }
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        throw new UnsupportedOperationException();
+        List<CustomerDTO> allCustomersDTO = new ArrayList<>();
+        List<Customer> allCustomers = userService.getAllCustomers();
+        for(Customer c: allCustomers){
+            allCustomersDTO.add(convertCustomerToDTO(c));
+        }
+        return allCustomersDTO;
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -51,4 +72,11 @@ public class UserController {
         throw new UnsupportedOperationException();
     }
 
+    public CustomerDTO convertCustomerToDTO(Customer customer){
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setName(customer.getName());
+        customerDTO.setPhoneNumber(customer.getPhoneNumber());
+        customerDTO.setNotes(customer.getNotes());
+        return customerDTO;
+    }
 }
