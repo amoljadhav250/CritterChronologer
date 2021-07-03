@@ -1,6 +1,8 @@
 package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.data.Customer;
+import com.udacity.jdnd.course3.critter.data.Employee;
+import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import com.udacity.jdnd.course3.critter.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +24,19 @@ import java.util.Set;
 public class UserController {
 
     UserService userService;
+    EmployeeService employeeService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, EmployeeService employeeService) {
         this.userService = userService;
+        this.employeeService = employeeService;
     }
+
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-        Customer customer = new Customer();
-        customer.setName(customerDTO.getName());
-        customer.setPhoneNumber(customerDTO.getPhoneNumber());
-        customer.setNotes(customerDTO.getNotes());
-        customer = userService.saveCustomer(customer);
+
+        Customer customer = userService.saveCustomer(convertDTOtoCustomer(customerDTO));
         CustomerDTO theCustomerDTO = convertCustomerToDTO(customer);
         return theCustomerDTO;
     }
@@ -56,7 +58,9 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        Employee employee = convertDTOtoEmployee(employeeDTO);
+        employee = employeeService.save(employee);
+        return convertEmployeetoDTO(employee);
     }
 
     @PostMapping("/employee/{employeeId}")
@@ -74,7 +78,7 @@ public class UserController {
         throw new UnsupportedOperationException();
     }
 
-    public CustomerDTO convertCustomerToDTO(Customer customer){
+    private CustomerDTO convertCustomerToDTO(Customer customer){
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setName(customer.getName());
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
@@ -82,4 +86,26 @@ public class UserController {
         customerDTO.setId(customer.getId());
         return customerDTO;
     }
+
+    private Customer convertDTOtoCustomer(CustomerDTO customerDTO){
+        Customer customer = new Customer();
+        customer.setName(customerDTO.getName());
+        customer.setPhoneNumber(customerDTO.getPhoneNumber());
+        customer.setNotes(customerDTO.getNotes());
+        return customer;
+    }
+
+    private Employee convertDTOtoEmployee(EmployeeDTO employeeDTO){
+        Employee employee = new Employee();
+        employee.setName(employeeDTO.getName());
+        return employee;
+    }
+
+    private EmployeeDTO convertEmployeetoDTO(Employee employee){
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(employee.getId());
+        employee.setName(employee.getName());
+        return employeeDTO;
+    }
+
 }
