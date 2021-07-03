@@ -65,7 +65,7 @@ public class UserController {
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return convertEmployeetoDTO(employeeService.getEmployee(employeeId));
     }
 
     @PutMapping("/employee/{employeeId}")
@@ -98,13 +98,17 @@ public class UserController {
     private Employee convertDTOtoEmployee(EmployeeDTO employeeDTO){
         Employee employee = new Employee();
         employee.setName(employeeDTO.getName());
+        employee.setDaysAvailable(employeeDTO.getDaysAvailable());
+        employee.setSkills(employeeDTO.getSkills());
         return employee;
     }
 
     private EmployeeDTO convertEmployeetoDTO(Employee employee){
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setId(employee.getId());
-        employee.setName(employee.getName());
+        employeeDTO.setName(employee.getName());
+        employeeDTO.setDaysAvailable(employee.getDaysAvailable());
+        employeeDTO.setSkills(employee.getSkills());
         return employeeDTO;
     }
 
