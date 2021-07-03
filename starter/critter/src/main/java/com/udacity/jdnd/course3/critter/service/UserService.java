@@ -20,8 +20,8 @@ CustomerRepository customerRepository;
     }
 
     @Transactional
-    public void saveCustomer(Customer customer){
-        customerRepository.save(customer);
+    public Customer saveCustomer(Customer customer){
+        return customerRepository.save(customer);
     }
 
     public List<Customer> getAllCustomers(){

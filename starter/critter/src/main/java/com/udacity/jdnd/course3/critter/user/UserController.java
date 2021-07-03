@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.data.Customer;
 import com.udacity.jdnd.course3.critter.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +34,9 @@ public class UserController {
         customer.setName(customerDTO.getName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
         customer.setNotes(customerDTO.getNotes());
-        userService.saveCustomer(customer);
-        return customerDTO;
+        customer = userService.saveCustomer(customer);
+        CustomerDTO theCustomerDTO = convertCustomerToDTO(customer);
+        return theCustomerDTO;
     }
 
     @GetMapping("/customer")
@@ -77,6 +79,7 @@ public class UserController {
         customerDTO.setName(customer.getName());
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
         customerDTO.setNotes(customer.getNotes());
+        customerDTO.setId(customer.getId());
         return customerDTO;
     }
 }

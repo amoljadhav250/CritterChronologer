@@ -53,7 +53,7 @@ public class CritterFunctionalTest {
         System.out.println("retrievedCustomer.getId():="+retrievedCustomer.getId());
         Assertions.assertEquals(newCustomer.getName(), customerDTO.getName());
         Assertions.assertEquals(newCustomer.getId(), retrievedCustomer.getId());
-        Assertions.assertTrue(retrievedCustomer.getId() == 0);
+        Assertions.assertTrue(retrievedCustomer.getId() > 0);
     }
 
     @Test
