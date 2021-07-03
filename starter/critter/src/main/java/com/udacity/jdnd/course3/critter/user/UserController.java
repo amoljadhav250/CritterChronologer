@@ -24,12 +24,10 @@ import java.util.Set;
 public class UserController {
 
     UserService userService;
-    EmployeeService employeeService;
 
     @Autowired
-    public UserController(UserService userService, EmployeeService employeeService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.employeeService = employeeService;
     }
 
 
@@ -59,13 +57,13 @@ public class UserController {
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Employee employee = convertDTOtoEmployee(employeeDTO);
-        employee = employeeService.save(employee);
+        employee = userService.save(employee);
         return convertEmployeetoDTO(employee);
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        return convertEmployeetoDTO(employeeService.getEmployee(employeeId));
+        return convertEmployeetoDTO(userService.getEmployee(employeeId));
     }
 
     @PutMapping("/employee/{employeeId}")
