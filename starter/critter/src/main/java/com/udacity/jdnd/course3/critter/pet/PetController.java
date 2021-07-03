@@ -1,7 +1,13 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.data.Customer;
+import com.udacity.jdnd.course3.critter.data.Pet;
+import com.udacity.jdnd.course3.critter.service.UserService;
+import com.udacity.jdnd.course3.critter.user.CustomerDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,23 +17,64 @@ import java.util.List;
 @RequestMapping("/pet")
 public class PetController {
 
+    UserService userService;
+
+    @Autowired
+    public PetController(UserService userService) {
+        this.userService = userService;
+    }
+
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-        throw new UnsupportedOperationException();
+        Pet pet = userService.savePet(convertDTOtoPet(petDTO));
+        return convertPettoDTO(pet);
     }
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        return convertPettoDTO(userService.getPetById(petId));
     }
 
     @GetMapping
     public List<PetDTO> getPets(){
-        throw new UnsupportedOperationException();
+        List<PetDTO> allPetDTO = new ArrayList<>();
+        List<Pet> allPets = userService.getAllPets();
+        for(Pet p: allPets){
+            allPetDTO.add(convertPettoDTO(p));
+        }
+        return allPetDTO;
+
     }
 
     @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
-        throw new UnsupportedOperationException();
+        List<Pet> allPets = userService.getAllPets();
+        List<PetDTO> allPetDTO = new ArrayList<>();
+        for(Pet p: allPets){
+            allPetDTO.add(convertPettoDTO(p));
+        }
+        return allPetDTO;
+    }
+
+    private Pet convertDTOtoPet(PetDTO petDTO){
+        Pet pet = new Pet();
+        pet.setName(petDTO.getName());
+        pet.setBirthDate(petDTO.getBirthDate());
+        pet.setType(petDTO.getType());
+        pet.setNotes(petDTO.getNotes());
+        //Customer customer = C
+        pet.setOwner(userService.getCustomerById(petDTO.getOwnerId()));
+        return pet;
+    }
+
+    private PetDTO convertPettoDTO(Pet pet){
+        PetDTO petDTO= new PetDTO();
+        petDTO.setId(pet.getId());
+        petDTO.setName(pet.getName());
+        petDTO.setNotes(pet.getNotes());
+        petDTO.setBirthDate(pet.getBirthDate());
+        petDTO.setType(pet.getType());
+        petDTO.setOwnerId(pet.getOwner().getId());
+        return petDTO;
     }
 }

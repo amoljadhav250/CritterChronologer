@@ -21,7 +21,14 @@ public class Pet {
     @ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer owner;
-    private long ownerId;
+
+    public Customer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Customer owner) {
+        this.owner = owner;
+    }
 
     public Pet() {
     }

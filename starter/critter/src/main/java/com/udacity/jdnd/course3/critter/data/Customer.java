@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "customer")
 public class Customer {
 
     @Id
@@ -15,8 +16,9 @@ public class Customer {
     private String notes;
 
     @OneToMany(fetch=FetchType.LAZY,
-            mappedBy="customer",
-            cascade= {CascadeType.ALL})
+            mappedBy="owner",
+            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
     private List<Pet> pets;
 
     public Customer(String name, String phoneNumber, String notes) {
