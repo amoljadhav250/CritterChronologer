@@ -62,12 +62,15 @@ public class PetController {
         pet.setBirthDate(petDTO.getBirthDate());
         pet.setType(petDTO.getType());
         pet.setNotes(petDTO.getNotes());
+        pet.setId(petDTO.getId());
         //Customer customer = C
         pet.setOwner(userService.getCustomerById(petDTO.getOwnerId()));
         return pet;
     }
 
     private PetDTO convertPettoDTO(Pet pet){
+        System.out.println("Inside private PetDTO convertPettoDTO(Pet pet)");
+        System.out.println("pet:="+pet);
         PetDTO petDTO= new PetDTO();
         petDTO.setId(pet.getId());
         petDTO.setName(pet.getName());

@@ -10,6 +10,7 @@ import com.udacity.jdnd.course3.critter.data.Pet;
 import com.udacity.jdnd.course3.critter.exception.CustomerNotFoundException;
 import com.udacity.jdnd.course3.critter.exception.EmployeeNotFoundException;
 import com.udacity.jdnd.course3.critter.exception.PetNotFoundException;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Service
 public class UserService {
 
@@ -31,7 +33,7 @@ public class UserService {
         this.petRepository = petRepository;
     }
 
-    @Transactional
+
     public Customer saveCustomer(Customer customer){
         return customerRepository.save(customer);
     }
@@ -41,6 +43,9 @@ public class UserService {
     }
 
     public  Customer getCustomerById(Long customerId){
+        System.out.println("Inside public  Customer getCustomerById(Long customerId)");
+        System.out.println("customerRepository.findById(customerId)="+customerRepository.findById(customerId));
+        System.out.println("customerRepository.findAll()="+customerRepository.findAll());
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
         if(optionalCustomer.isPresent()){
             return optionalCustomer.get();
@@ -54,7 +59,7 @@ public class UserService {
         return employeeRepository.save(employee);
     }
 
-    public Employee getEmployee(Long employeeId) {
+    public Employee getEmployeeById(Long employeeId) {
         Optional<Employee> employee= employeeRepository.findById(employeeId);
         if(employee.isPresent()){
             return employee.get();
@@ -63,15 +68,20 @@ public class UserService {
         }
     }
 
-    public Pet savePet(Pet convertDTOtoPet) {
-        return petRepository.save(convertDTOtoPet);
+    public Pet savePet(Pet pet) {
+        Customer owner =  pet.getOwner();
+        System.out.println("owner is: "+pet.getOwner());
+        owner.getPets().add(pet);
+        return petRepository.save(pet);
     }
 
     public Pet getPetById(long petId) {
         Optional<Pet> optionalPet = petRepository.findById(petId);
         if(optionalPet.isPresent()){
+            System.out.println("optionalPet.get():="+optionalPet.get());
             return optionalPet.get();
         }else{
+            System.out.println("optionalPet.get():= throwing PetNotFoundException");
             throw new PetNotFoundException("Pet with petId="+petId+" not found");
         }
     }

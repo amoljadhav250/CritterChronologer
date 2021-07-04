@@ -52,7 +52,7 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        Customer customer = userService.getCustomerById(userService.getOwnerByPetId(petId));
+        Customer customer = userService.getCustomerById(petId);
         return convertCustomerToDTO(customer);
     }
 
@@ -65,7 +65,7 @@ public class UserController {
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        return convertEmployeetoDTO(userService.getEmployee(employeeId));
+        return convertEmployeetoDTO(userService.getEmployeeById(employeeId));
     }
 
     @PutMapping("/employee/{employeeId}")
@@ -95,8 +95,10 @@ public class UserController {
         customer.setName(customerDTO.getName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
         customer.setNotes(customerDTO.getNotes());
+        customer.setPets(getPets(customerDTO.getPetIds()));
         return customer;
     }
+
 
     private Employee convertDTOtoEmployee(EmployeeDTO employeeDTO){
         Employee employee = new Employee();
@@ -121,6 +123,17 @@ public class UserController {
             list.add(p.getId());
         }
         return list;
+    }
+
+    private List<Pet> getPets(List<Long> petIds) {
+        List<Pet> pets = new ArrayList<>();
+        if(petIds!=null){
+            for(Long petId : petIds){
+                pets.add(userService.getPetById(petId));
+            }
+        }
+        System.out.println("************pets*******="+pets);
+        return pets;
     }
 
 }

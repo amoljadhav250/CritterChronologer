@@ -10,7 +10,7 @@ public class Pet {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private PetType type;
@@ -71,5 +71,25 @@ public class Pet {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                ", notes='" + notes + '\'' +
+                ", owner=" + owner +
+                '}';
+    }
+
+    public Pet(PetType type, String name, LocalDate birthDate, String notes, Customer owner) {
+        this.type = type;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.notes = notes;
+        this.owner = owner;
     }
 }

@@ -8,23 +8,24 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String name;
     private String phoneNumber;
     private String notes;
 
-    @OneToMany(fetch=FetchType.LAZY,
+    @OneToMany(
             mappedBy="owner",
-            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-                    CascadeType.DETACH, CascadeType.REFRESH})
+            fetch = FetchType.EAGER,
+            cascade= CascadeType.ALL)
     private List<Pet> pets;
 
-    public Customer(String name, String phoneNumber, String notes) {
+    public Customer(String name, String phoneNumber, String notes, List<Pet> pets) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.notes = notes;
+        this.pets = pets;
     }
 
     public Customer(){}
@@ -66,6 +67,17 @@ public class Customer {
     }
 
     public void setPets(List<Pet> pets) {
-        this.pets = pets;
+        this.pets = this.pets;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", notes='" + notes + '\'' +
+                ", pets=" + pets +
+                '}';
     }
 }

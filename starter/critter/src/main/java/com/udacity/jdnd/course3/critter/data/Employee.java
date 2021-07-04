@@ -2,10 +2,7 @@ package com.udacity.jdnd.course3.critter.data;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.Set;
 
@@ -13,7 +10,7 @@ import java.util.Set;
 public class Employee {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String name;
@@ -22,6 +19,7 @@ public class Employee {
     private Set<EmployeeSkill> skills;
 
     @ElementCollection
+    @Enumerated(EnumType.STRING)
     private Set<DayOfWeek> daysAvailable;
 
     public String getName() {
@@ -61,5 +59,21 @@ public class Employee {
     }
 
     public Employee() {
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", skills=" + skills +
+                ", daysAvailable=" + daysAvailable +
+                '}';
+    }
+
+    public Employee(String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable) {
+        this.name = name;
+        this.skills = skills;
+        this.daysAvailable = daysAvailable;
     }
 }
