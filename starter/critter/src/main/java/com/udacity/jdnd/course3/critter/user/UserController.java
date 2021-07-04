@@ -95,7 +95,7 @@ public class UserController {
         customer.setName(customerDTO.getName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
         customer.setNotes(customerDTO.getNotes());
-        customer.setPets(getPets(customerDTO.getPetIds()));
+        //customer.setPets(getPets(customerDTO.getPetIds()));
         return customer;
     }
 

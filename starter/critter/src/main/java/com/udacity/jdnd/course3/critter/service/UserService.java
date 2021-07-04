@@ -70,8 +70,13 @@ public class UserService {
 
     public Pet savePet(Pet pet) {
         Customer owner =  pet.getOwner();
-        System.out.println("owner is: "+pet.getOwner());
-        owner.getPets().add(pet);
+        System.out.println("owner is: "+owner);
+        if(owner!=null){
+            owner.getPets().add(pet);
+        }else{
+            System.out.println("Owner is not associated with pet:="+pet);
+        }
+
         return petRepository.save(pet);
     }
 
