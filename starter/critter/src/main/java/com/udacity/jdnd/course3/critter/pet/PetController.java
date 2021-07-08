@@ -63,8 +63,13 @@ public class PetController {
         pet.setType(petDTO.getType());
         pet.setNotes(petDTO.getNotes());
         pet.setId(petDTO.getId());
-        //Customer customer = C
-        pet.setOwner(userService.getCustomerById(petDTO.getOwnerId()));
+        if(petDTO.getOwnerId()!=0){
+            pet.setOwner(userService.getCustomerById(petDTO.getOwnerId()));
+        }else{
+            System.out.println("Pet "+petDTO + "doesn't have a owner");
+            pet.setOwner(null);
+        }
+
         return pet;
     }
 
@@ -77,7 +82,12 @@ public class PetController {
         petDTO.setNotes(pet.getNotes());
         petDTO.setBirthDate(pet.getBirthDate());
         petDTO.setType(pet.getType());
-        petDTO.setOwnerId(pet.getOwner().getId());
+        if(pet.getOwner()!=null){
+            petDTO.setOwnerId(pet.getOwner().getId());
+        }else{
+            petDTO.setOwnerId(0);
+        }
+
         return petDTO;
     }
 }

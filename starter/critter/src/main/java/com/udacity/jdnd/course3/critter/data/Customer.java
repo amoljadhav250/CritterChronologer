@@ -1,6 +1,7 @@
 package com.udacity.jdnd.course3.critter.data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,9 +17,7 @@ public class Customer {
     private String notes;
 
     @OneToMany(
-            mappedBy="owner",
-            fetch = FetchType.EAGER,
-            cascade= CascadeType.ALL)
+            mappedBy="owner")
     private List<Pet> pets;
 
     public Customer(String name, String phoneNumber, String notes, List<Pet> pets) {
@@ -28,7 +27,9 @@ public class Customer {
         this.pets = pets;
     }
 
-    public Customer(){}
+    public Customer(){
+        //pets = new ArrayList<>();
+    }
 
     public long getId() {
         return id;
@@ -63,7 +64,7 @@ public class Customer {
     }
 
     public List<Pet> getPets() {
-        return pets;
+        return this.pets;
     }
 
     public void setPets(List<Pet> pets) {
@@ -80,4 +81,6 @@ public class Customer {
                 ", pets=" + pets +
                 '}';
     }
+
+
 }

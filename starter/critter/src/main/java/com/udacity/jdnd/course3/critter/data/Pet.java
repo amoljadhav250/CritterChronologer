@@ -33,6 +33,10 @@ public class Pet {
     public Pet() {
     }
 
+    public Pet(String name) {
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

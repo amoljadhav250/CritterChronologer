@@ -52,7 +52,7 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        Customer customer = userService.getCustomerById(petId);
+        Customer customer = userService.getOwnerByPet(petId);
         return convertCustomerToDTO(customer);
     }
 
@@ -84,7 +84,11 @@ public class UserController {
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
         customerDTO.setNotes(customer.getNotes());
         customerDTO.setId(customer.getId());
-        //customerDTO.setPetIds(getPetIds(customer.getPets()));
+        if(customer.getPets()!=null){
+            customerDTO.setPetIds(getPetIds(customer.getPets()));
+        }else{
+            customerDTO.setPetIds(new ArrayList<Long>());
+        }
         return customerDTO;
     }
 
@@ -92,10 +96,15 @@ public class UserController {
 
     private Customer convertDTOtoCustomer(CustomerDTO customerDTO){
         Customer customer = new Customer();
+        customer.setId(customerDTO.getId());
         customer.setName(customerDTO.getName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
         customer.setNotes(customerDTO.getNotes());
-        //customer.setPets(getPets(customerDTO.getPetIds()));
+        if(customerDTO.getPetIds()!=null){
+            customer.setPets(getPets(customerDTO.getPetIds()));
+        }else{
+            customer.setPets(new ArrayList<Pet>());
+        }
         return customer;
     }
 

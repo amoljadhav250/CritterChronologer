@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,23 +35,28 @@ public class UserService {
     }
 
 
-    public Customer saveCustomer(Customer customer){
+    public Customer saveCustomer(Customer customer) {
+        if(customer.getPets()==null){
+            customer.setPets(new ArrayList<>());
+        }
         return customerRepository.save(customer);
     }
 
-    public List<Customer> getAllCustomers(){
-        return customerRepository.findAll();
+    public List<Customer> getAllCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+        List<Pet> pets = petRepository.findAll();
+        return customers;
     }
 
-    public  Customer getCustomerById(Long customerId){
+    public Customer getCustomerById(Long customerId) {
         System.out.println("Inside public  Customer getCustomerById(Long customerId)");
-        System.out.println("customerRepository.findById(customerId)="+customerRepository.findById(customerId));
-        System.out.println("customerRepository.findAll()="+customerRepository.findAll());
+        System.out.println("customerRepository.findById(customerId)=" + customerRepository.findById(customerId));
+        System.out.println("customerRepository.findAll()=" + customerRepository.findAll());
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        if(optionalCustomer.isPresent()){
+        if (optionalCustomer.isPresent()) {
             return optionalCustomer.get();
-        }else{
-            throw new CustomerNotFoundException("Customer with id="+customerId+" not found");
+        } else {
+            throw new CustomerNotFoundException("Customer with id=" + customerId + " not found");
         }
     }
 
@@ -60,21 +66,29 @@ public class UserService {
     }
 
     public Employee getEmployeeById(Long employeeId) {
-        Optional<Employee> employee= employeeRepository.findById(employeeId);
-        if(employee.isPresent()){
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if (employee.isPresent()) {
             return employee.get();
-        }else{
-            throw new EmployeeNotFoundException("Employee with id="+employeeId+" not found.");
+        } else {
+            throw new EmployeeNotFoundException("Employee with id=" + employeeId + " not found.");
         }
     }
 
     public Pet savePet(Pet pet) {
-        Customer owner =  pet.getOwner();
-        System.out.println("owner is: "+owner);
-        if(owner!=null){
-            owner.getPets().add(pet);
-        }else{
-            System.out.println("Owner is not associated with pet:="+pet);
+        Customer owner = pet.getOwner();
+        System.out.println("owner is: " + owner);
+        if (owner != null) {
+            System.out.println("Owner returned by pet.getOwner() is not null");
+            if (owner.getPets() == null) {
+                owner.setPets(new ArrayList<Pet>());
+            } else {
+                owner.getPets().add(pet);
+            }
+
+            customerRepository.save(owner);
+        } else {
+            System.out.println("Owner returned by pet.getOwner() is null");
+            System.out.println("Owner is not associated with pet:=" + pet);
         }
 
         return petRepository.save(pet);
@@ -82,12 +96,12 @@ public class UserService {
 
     public Pet getPetById(long petId) {
         Optional<Pet> optionalPet = petRepository.findById(petId);
-        if(optionalPet.isPresent()){
-            System.out.println("optionalPet.get():="+optionalPet.get());
+        if (optionalPet.isPresent()) {
+            System.out.println("optionalPet.get():=" + optionalPet.get());
             return optionalPet.get();
-        }else{
+        } else {
             System.out.println("optionalPet.get():= throwing PetNotFoundException");
-            throw new PetNotFoundException("Pet with petId="+petId+" not found");
+            throw new PetNotFoundException("Pet with petId=" + petId + " not found");
         }
     }
 
@@ -98,5 +112,19 @@ public class UserService {
     public Long getOwnerByPetId(long petId) {
         Pet pet = getPetById(petId);
         return pet.getOwner().getId();
+    }
+
+    public Customer getOwnerByPet(long petId) {
+        Customer customer = petRepository.getOne(petId).getOwner();
+        if (customer.getPets() == null) {
+            customer.setPets(new ArrayList<Pet>());
+            List<Pet> petList = petRepository.findAll();
+            for (int i = 0; i < petList.size(); i++) {
+                if (petList.get(i).getOwner() == customer) {
+                    customer.getPets().add(petList.get(i));
+                }
+            }
+        }
+        return customer;
     }
 }
