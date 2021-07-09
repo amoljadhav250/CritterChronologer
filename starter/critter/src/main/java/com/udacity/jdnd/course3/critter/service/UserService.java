@@ -49,7 +49,7 @@ public class UserService {
 
     public List<Customer> getAllCustomers() {
         List<Customer> customers = customerRepository.findAll();
-        List<Pet> pets = petRepository.findAll();
+        /*List<Pet> pets = petRepository.findAll();
         for(int i=0;i<customers.size();i++){
             Customer c = customers.get(i);
             for(int j=0;j<pets.size();j++){
@@ -59,7 +59,7 @@ public class UserService {
                 }
 
             }
-        }
+        }*/
         return customers;
     }
 

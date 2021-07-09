@@ -12,7 +12,7 @@ public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long id=0;
 
     private PetType type;
     private String name;

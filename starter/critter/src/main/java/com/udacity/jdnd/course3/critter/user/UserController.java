@@ -96,7 +96,7 @@ public class UserController {
 
     private Customer convertDTOtoCustomer(CustomerDTO customerDTO){
         Customer customer = new Customer();
-        //customer.setId(customerDTO.getId());
+        customer.setId(customerDTO.getId());
         customer.setName(customerDTO.getName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
         customer.setNotes(customerDTO.getNotes());
