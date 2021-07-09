@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
+//@Transactional
 @Service
 public class UserService {
 
@@ -45,6 +45,24 @@ public class UserService {
     public List<Customer> getAllCustomers() {
         List<Customer> customers = customerRepository.findAll();
         List<Pet> pets = petRepository.findAll();
+        System.out.println("Pringint customers:-");
+        System.out.println(customers);
+        System.out.println("Prinign pets");
+        System.out.println(pets);
+        for(int i=0;i<customers.size();i++){
+            Customer c = customers.get(i);
+            if(c.getPets()==null){
+                c.setPets(new ArrayList<Pet>());
+            }
+            customerRepository.save(c);
+            for(int j=0;j<pets.size();j++){
+                Pet p = pets.get(i);
+                if(p.getOwner().equals(c)){
+                    c.getPets().add(p);
+                }
+
+            }
+        }
         return customers;
     }
 

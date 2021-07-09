@@ -128,9 +128,12 @@ public class UserController {
 
     private List<Long> getPetIds(List<Pet> pets) {
         List<Long> list = new ArrayList<>();
-        for(Pet p : pets){
-            list.add(p.getId());
+        if(pets != null){
+            for(Pet p : pets){
+                list.add(p.getId());
+            }
         }
+
         return list;
     }
 

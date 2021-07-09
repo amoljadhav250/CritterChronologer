@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.data;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "customer")
@@ -82,5 +83,16 @@ public class Customer {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
