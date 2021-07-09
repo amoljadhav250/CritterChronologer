@@ -10,7 +10,7 @@ import java.util.Set;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
@@ -72,6 +72,13 @@ public class Employee {
     }
 
     public Employee(String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable) {
+        this.name = name;
+        this.skills = skills;
+        this.daysAvailable = daysAvailable;
+    }
+
+    public Employee(long id, String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable) {
+        this.id = id;
         this.name = name;
         this.skills = skills;
         this.daysAvailable = daysAvailable;

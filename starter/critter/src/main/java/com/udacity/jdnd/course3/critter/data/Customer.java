@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
@@ -19,7 +19,7 @@ public class Customer {
 
     @OneToMany(
             mappedBy="owner")
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
     public Customer(String name, String phoneNumber, String notes, List<Pet> pets) {
         this.name = name;
@@ -72,27 +72,21 @@ public class Customer {
         this.pets = this.pets;
     }
 
+
+    public Customer(long id, String name, String phoneNumber, String notes, List<Pet> pets) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.notes = notes;
+        this.pets = pets;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", notes='" + notes + '\'' +
                 ", pets=" + pets +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
-        return id == customer.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

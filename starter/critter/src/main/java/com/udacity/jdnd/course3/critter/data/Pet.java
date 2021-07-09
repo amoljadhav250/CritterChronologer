@@ -4,13 +4,14 @@ import com.udacity.jdnd.course3.critter.pet.PetType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class Pet {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private PetType type;
@@ -77,23 +78,42 @@ public class Pet {
         this.notes = notes;
     }
 
-    @Override
-    public String toString() {
-        return "Pet{" +
-                "id=" + id +
-                ", type=" + type +
-                ", name='" + name + '\'' +
-                ", birthDate=" + birthDate +
-                ", notes='" + notes + '\'' +
-                ", owner=" + owner +
-                '}';
-    }
-
     public Pet(PetType type, String name, LocalDate birthDate, String notes, Customer owner) {
         this.type = type;
         this.name = name;
         this.birthDate = birthDate;
         this.notes = notes;
         this.owner = owner;
+    }
+
+    public Pet(long id, PetType type, String name, LocalDate birthDate, String notes, Customer owner) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.notes = notes;
+        this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pet pet = (Pet) o;
+        return id == pet.id && type == pet.type && Objects.equals(name, pet.name) && Objects.equals(birthDate, pet.birthDate) && Objects.equals(notes, pet.notes) && Objects.equals(owner, pet.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, name, birthDate, notes, owner);
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

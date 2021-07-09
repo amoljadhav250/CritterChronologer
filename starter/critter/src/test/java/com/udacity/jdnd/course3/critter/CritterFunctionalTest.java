@@ -108,10 +108,10 @@ public class CritterFunctionalTest {
         System.out.println("retrievedCustomer:="+retrievedCustomer);
         System.out.println("retrievedCustomer.getPetIds():="+retrievedCustomer.getPetIds());
         System.out.println("retrievedCustomer.getPetIds().size():="+retrievedCustomer.getPetIds().size());
-        //System.out.println("retrievedCustomer.getPetIds().get(0):="+retrievedCustomer.getPetIds().get(0));
+        System.out.println("retrievedCustomer.getPetIds().get(0):="+retrievedCustomer.getPetIds().get(0));
         System.out.println("retrievedPet.getId():="+retrievedPet.getId());
         Assertions.assertTrue(retrievedCustomer.getPetIds() != null && retrievedCustomer.getPetIds().size() > 0);
-        //Assertions.assertEquals(retrievedCustomer.getPetIds().get(0), retrievedPet.getId());
+        Assertions.assertEquals(retrievedCustomer.getPetIds().get(0), retrievedPet.getId());
     }
 
     @Test

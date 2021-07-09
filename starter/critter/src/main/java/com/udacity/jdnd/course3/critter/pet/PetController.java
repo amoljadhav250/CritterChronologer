@@ -62,7 +62,7 @@ public class PetController {
         pet.setBirthDate(petDTO.getBirthDate());
         pet.setType(petDTO.getType());
         pet.setNotes(petDTO.getNotes());
-        pet.setId(petDTO.getId());
+        //pet.setId(petDTO.getId());
         if(petDTO.getOwnerId()!=0){
             pet.setOwner(userService.getCustomerById(petDTO.getOwnerId()));
         }else{
@@ -90,4 +90,6 @@ public class PetController {
 
         return petDTO;
     }
+
+
 }

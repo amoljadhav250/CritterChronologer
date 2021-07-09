@@ -36,29 +36,26 @@ public class UserService {
 
 
     public Customer saveCustomer(Customer customer) {
-        if(customer.getPets()==null){
-            customer.setPets(new ArrayList<>());
-        }
-        return customerRepository.save(customer);
+        Customer  savedCustomer= customerRepository.save(customer);
+        /*if(savedCustomer.getPets()!=null){
+            for(Pet p : savedCustomer.getPets()){
+                p.setOwner(savedCustomer);
+            }
+        }*/
+        System.out.println("Inside UserService.saveCustomer(Customer customer)");
+        System.out.println("savedCustomer:="+savedCustomer);
+        return savedCustomer;
     }
 
     public List<Customer> getAllCustomers() {
         List<Customer> customers = customerRepository.findAll();
         List<Pet> pets = petRepository.findAll();
-        System.out.println("Pringint customers:-");
-        System.out.println(customers);
-        System.out.println("Prinign pets");
-        System.out.println(pets);
         for(int i=0;i<customers.size();i++){
             Customer c = customers.get(i);
-            if(c.getPets()==null){
-                c.setPets(new ArrayList<Pet>());
-            }
-            customerRepository.save(c);
             for(int j=0;j<pets.size();j++){
                 Pet p = pets.get(i);
                 if(p.getOwner().equals(c)){
-                    c.getPets().add(p);
+                    //c.getPets().add(p);
                 }
 
             }
@@ -93,23 +90,35 @@ public class UserService {
     }
 
     public Pet savePet(Pet pet) {
-        Customer owner = pet.getOwner();
+        /*Customer owner = pet.getOwner();
         System.out.println("owner is: " + owner);
+        System.out.println("Inside UserService.savePet(Pet pet)");
         if (owner != null) {
             System.out.println("Owner returned by pet.getOwner() is not null");
-            if (owner.getPets() == null) {
-                owner.setPets(new ArrayList<Pet>());
-            } else {
+            {
                 owner.getPets().add(pet);
             }
+            Customer customer = customerRepository.save(owner);
 
-            customerRepository.save(owner);
+            System.out.println("customer:-"+customer);
         } else {
             System.out.println("Owner returned by pet.getOwner() is null");
             System.out.println("Owner is not associated with pet:=" + pet);
         }
-
-        return petRepository.save(pet);
+        return petRepository.save(pet);*/
+        Customer owner = pet.getOwner();
+        System.out.println("owner is: " + owner);
+        System.out.println("Inside UserService.savePet(Pet pet)");
+        Pet savedPet = petRepository.save(pet);
+        if (owner != null) {
+            System.out.println("Owner returned by pet.getOwner() is not null");
+            {
+                owner.getPets().add(savedPet);
+            }
+            Customer customer = customerRepository.save(owner);
+            //System.out.println("customer:-"+customer);
+        }
+        return savedPet;
     }
 
     public Pet getPetById(long petId) {

@@ -84,11 +84,11 @@ public class UserController {
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
         customerDTO.setNotes(customer.getNotes());
         customerDTO.setId(customer.getId());
-        if(customer.getPets()!=null){
+        if(customer.getPets().size()!=0){
             customerDTO.setPetIds(getPetIds(customer.getPets()));
-        }else{
+        }/*else{
             customerDTO.setPetIds(new ArrayList<Long>());
-        }
+        }*/
         return customerDTO;
     }
 
@@ -96,15 +96,13 @@ public class UserController {
 
     private Customer convertDTOtoCustomer(CustomerDTO customerDTO){
         Customer customer = new Customer();
-        customer.setId(customerDTO.getId());
+        //customer.setId(customerDTO.getId());
         customer.setName(customerDTO.getName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
         customer.setNotes(customerDTO.getNotes());
-        if(customerDTO.getPetIds()!=null){
-            customer.setPets(getPets(customerDTO.getPetIds()));
-        }else{
-            customer.setPets(new ArrayList<Pet>());
-        }
+        //if(customerDTO.getPetIds()!=null){
+        //    customer.setPets(getPets(customerDTO.getPetIds()));
+        //}
         return customer;
     }
 
@@ -131,6 +129,8 @@ public class UserController {
         if(pets != null){
             for(Pet p : pets){
                 list.add(p.getId());
+                System.out.println("Inside UserController.getPetIds()");
+                System.out.println("p:="+p+", p.getId():="+p.getId());
             }
         }
 
