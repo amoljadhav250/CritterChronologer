@@ -4,12 +4,15 @@ package com.udacity.jdnd.course3.critter.service;
 import com.udacity.jdnd.course3.critter.dao.CustomerRepository;
 import com.udacity.jdnd.course3.critter.dao.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.dao.PetRepository;
+import com.udacity.jdnd.course3.critter.dao.ScheduleRepository;
 import com.udacity.jdnd.course3.critter.data.Customer;
 import com.udacity.jdnd.course3.critter.data.Employee;
 import com.udacity.jdnd.course3.critter.data.Pet;
+import com.udacity.jdnd.course3.critter.data.Schedule;
 import com.udacity.jdnd.course3.critter.exception.CustomerNotFoundException;
 import com.udacity.jdnd.course3.critter.exception.EmployeeNotFoundException;
 import com.udacity.jdnd.course3.critter.exception.PetNotFoundException;
+import com.udacity.jdnd.course3.critter.schedule.ScheduleDTO;
 import com.udacity.jdnd.course3.critter.user.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
@@ -30,14 +33,15 @@ public class UserService {
     private CustomerRepository customerRepository;
     private EmployeeRepository employeeRepository;
     private PetRepository petRepository;
+    private ScheduleRepository scheduleRepository;
 
     @Autowired
-    public UserService(CustomerRepository customerRepository, EmployeeRepository employeeRepository, PetRepository petRepository) {
+    public UserService(CustomerRepository customerRepository, EmployeeRepository employeeRepository, PetRepository petRepository, ScheduleRepository scheduleRepository) {
         this.customerRepository = customerRepository;
         this.employeeRepository = employeeRepository;
         this.petRepository = petRepository;
+        this.scheduleRepository = scheduleRepository;
     }
-
 
     public Customer saveCustomer(Customer customer) {
         Customer  savedCustomer= customerRepository.save(customer);
@@ -195,5 +199,49 @@ public class UserService {
         }
         System.out.println("returnEmployees:="+returnEmployees);
         return returnEmployees;
+    }
+
+    public Schedule createSchedule(Schedule schedule) {
+            return scheduleRepository.save(schedule);
+    }
+
+    public List<Schedule> getAllSchedules() {
+        return scheduleRepository.findAll();
+    }
+
+    public List<Schedule> getScheduleForPet(long petId) {
+        List<Schedule> schedules= scheduleRepository.findAll();
+        List<Schedule> returnSchedule = new ArrayList<>();
+        for(Schedule s: schedules){
+            if(s.getPets().contains(petRepository.getOne(petId))){
+                returnSchedule.add(s);
+            }
+        }
+        return returnSchedule;
+    }
+
+    public List<Schedule> getScheduleForEmployee(long employeeId) {
+        List<Schedule> schedules= scheduleRepository.findAll();
+        List<Schedule> returnSchedule = new ArrayList<>();
+        for(Schedule s: schedules){
+            if(s.getEmployees().contains(employeeRepository.getOne(employeeId))){
+                returnSchedule.add(s);
+            }
+        }
+        return returnSchedule;
+    }
+
+    public List<Schedule> getScheduleForCustomer(long customerId) {
+        List<Schedule> schedules= scheduleRepository.findAll();
+        List<Schedule> returnSchedule = new ArrayList<>();
+        for(Schedule s: schedules){
+            List<Pet> petList = s.getPets();
+            for(Pet p : petList){
+                if(p.getOwner().getId() == customerId){
+                    returnSchedule.add(s);
+                }
+            }
+        }
+        return returnSchedule;
     }
 }

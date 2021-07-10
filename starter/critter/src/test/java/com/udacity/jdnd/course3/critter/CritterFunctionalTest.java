@@ -243,6 +243,9 @@ public class CritterFunctionalTest {
 
         //Employee 1 in is both schedule 1 and 3
         List<ScheduleDTO> scheds1e = scheduleController.getScheduleForEmployee(sched1.getEmployeeIds().get(0));
+        System.out.println("********************************************************************scheds1e:="+scheds1e);
+        System.out.println("********************************************************************sched1:="+sched1);
+        System.out.println("********************************************************************sched3:="+sched3);
         compareSchedules(sched1, scheds1e.get(0));
         compareSchedules(sched3, scheds1e.get(1));
 
