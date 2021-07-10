@@ -10,14 +10,18 @@ import com.udacity.jdnd.course3.critter.data.Pet;
 import com.udacity.jdnd.course3.critter.exception.CustomerNotFoundException;
 import com.udacity.jdnd.course3.critter.exception.EmployeeNotFoundException;
 import com.udacity.jdnd.course3.critter.exception.PetNotFoundException;
+import com.udacity.jdnd.course3.critter.user.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 //@Transactional
 @Service
@@ -153,5 +157,43 @@ public class UserService {
             }
         }
         return customer;
+    }
+
+    public void setAvailability(Set<DayOfWeek> daysAvailable, long employeeId) {
+        Optional<Employee> optionalEmployeee = employeeRepository.findById(employeeId);
+        if (optionalEmployeee.isPresent()) {
+            Employee employee =  optionalEmployeee.get();
+            employee.setDaysAvailable(daysAvailable);
+            employeeRepository.save(employee);
+        } else {
+            throw new EmployeeNotFoundException("Employee with id=" + employeeId + " not found.");
+        }
+    }
+
+    public List<Employee> findEmployeesForService(EmployeeRequestDTO employeeDTO) {
+        System.out.println("Inside userService.findEmployeesForService");
+
+        DayOfWeek day = employeeDTO.getDate().getDayOfWeek();
+        Set<EmployeeSkill> skills = employeeDTO.getSkills();
+        List<Employee> allEmployees = employeeRepository.findAll();
+
+        System.out.println("day:="+day);
+        System.out.println("skills:="+skills);
+
+        List<Employee> returnEmployees = new ArrayList<>();
+        for(Employee e : allEmployees){
+            System.out.println("e.getDaysAvailable():="+e.getDaysAvailable());
+            System.out.println("e.getSkills():="+e.getSkills());
+            if(e.getDaysAvailable().contains(day)){
+
+                System.out.println(e + " is available on " + day);
+                if(e.getSkills().containsAll(skills)){
+                    returnEmployees.add(e);
+                    System.out.println(e+" has skills"+skills);
+                }
+            }
+        }
+        System.out.println("returnEmployees:="+returnEmployees);
+        return returnEmployees;
     }
 }

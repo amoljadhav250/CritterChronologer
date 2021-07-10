@@ -70,12 +70,17 @@ public class UserController {
 
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        userService.setAvailability(daysAvailable,employeeId);
     }
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        List<EmployeeDTO> employeesDTO = new ArrayList<>();
+        List<Employee> employees = userService.findEmployeesForService(employeeDTO);
+        for(Employee e: employees){
+            employeesDTO.add(convertEmployeetoDTO(e));
+        }
+        return employeesDTO;
     }
 
     private CustomerDTO convertCustomerToDTO(Customer customer){

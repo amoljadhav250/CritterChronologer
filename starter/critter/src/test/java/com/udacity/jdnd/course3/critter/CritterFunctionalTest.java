@@ -184,6 +184,8 @@ public class CritterFunctionalTest {
 
         Set<Long> eIds1 = userController.findEmployeesForService(er1).stream().map(EmployeeDTO::getId).collect(Collectors.toSet());
         Set<Long> eIds1expected = Sets.newHashSet(emp1n.getId(), emp2n.getId());
+        System.out.println("eIds1:="+eIds1);
+        System.out.println("eIds1expected:="+eIds1expected);
         Assertions.assertEquals(eIds1, eIds1expected);
 
         //make a request that matches only employee 3
