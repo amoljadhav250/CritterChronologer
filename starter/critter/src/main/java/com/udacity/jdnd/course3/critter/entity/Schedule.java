@@ -1,11 +1,10 @@
-package com.udacity.jdnd.course3.critter.data;
+package com.udacity.jdnd.course3.critter.entity;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity

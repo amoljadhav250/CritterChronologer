@@ -1,32 +1,30 @@
 package com.udacity.jdnd.course3.critter.service;
 
 
-import com.udacity.jdnd.course3.critter.dao.CustomerRepository;
-import com.udacity.jdnd.course3.critter.dao.EmployeeRepository;
-import com.udacity.jdnd.course3.critter.dao.PetRepository;
-import com.udacity.jdnd.course3.critter.dao.ScheduleRepository;
-import com.udacity.jdnd.course3.critter.data.Customer;
-import com.udacity.jdnd.course3.critter.data.Employee;
-import com.udacity.jdnd.course3.critter.data.Pet;
-import com.udacity.jdnd.course3.critter.data.Schedule;
+import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
+import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
+import com.udacity.jdnd.course3.critter.repository.PetRepository;
+import com.udacity.jdnd.course3.critter.repository.ScheduleRepository;
+import com.udacity.jdnd.course3.critter.entity.Customer;
+import com.udacity.jdnd.course3.critter.entity.Employee;
+import com.udacity.jdnd.course3.critter.entity.Pet;
+import com.udacity.jdnd.course3.critter.entity.Schedule;
 import com.udacity.jdnd.course3.critter.exception.CustomerNotFoundException;
 import com.udacity.jdnd.course3.critter.exception.EmployeeNotFoundException;
 import com.udacity.jdnd.course3.critter.exception.PetNotFoundException;
-import com.udacity.jdnd.course3.critter.schedule.ScheduleDTO;
 import com.udacity.jdnd.course3.critter.user.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
-import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-//@Transactional
+@Transactional
 @Service
 public class UserService {
 

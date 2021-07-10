@@ -1,11 +1,9 @@
 package com.udacity.jdnd.course3.critter.user;
 
-import com.udacity.jdnd.course3.critter.data.Customer;
-import com.udacity.jdnd.course3.critter.data.Employee;
-import com.udacity.jdnd.course3.critter.data.Pet;
-import com.udacity.jdnd.course3.critter.service.EmployeeService;
+import com.udacity.jdnd.course3.critter.entity.Customer;
+import com.udacity.jdnd.course3.critter.entity.Employee;
+import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

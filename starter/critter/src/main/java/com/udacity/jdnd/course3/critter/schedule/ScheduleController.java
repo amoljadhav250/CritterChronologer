@@ -1,8 +1,8 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
-import com.udacity.jdnd.course3.critter.data.Employee;
-import com.udacity.jdnd.course3.critter.data.Pet;
-import com.udacity.jdnd.course3.critter.data.Schedule;
+import com.udacity.jdnd.course3.critter.entity.Employee;
+import com.udacity.jdnd.course3.critter.entity.Pet;
+import com.udacity.jdnd.course3.critter.entity.Schedule;
 import com.udacity.jdnd.course3.critter.service.UserService;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package com.udacity.jdnd.course3.critter.service;
 
-import com.udacity.jdnd.course3.critter.dao.EmployeeRepository;
-import com.udacity.jdnd.course3.critter.data.Employee;
+import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
+import com.udacity.jdnd.course3.critter.entity.Employee;
 import com.udacity.jdnd.course3.critter.exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
