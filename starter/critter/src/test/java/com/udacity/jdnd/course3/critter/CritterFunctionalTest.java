@@ -27,7 +27,7 @@ import java.util.stream.IntStream;
  * Students will need to configure the application to run these tests by adding application.properties file
  * to the test/resources directory that specifies the datasource. It can run using an in-memory H2 instance
  * and should not try to re-use the same datasource used by the rest of the app.
- *
+ * <p>
  * These tests should all pass once the project is complete.
  */
 @Transactional
@@ -44,28 +44,28 @@ public class CritterFunctionalTest {
     private ScheduleController scheduleController;
 
     @Test
-    public void testCreateCustomer(){
+    public void testCreateCustomer() {
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
         CustomerDTO retrievedCustomer = userController.getAllCustomers().get(0);
-        System.out.println("newCustomer.getName():="+newCustomer.getName());
-        System.out.println("customerDTO.getName():="+customerDTO.getName());
-        System.out.println("newCustomer.getId():="+newCustomer.getId());
-        System.out.println("retrievedCustomer.getId():="+retrievedCustomer.getId());
+        System.out.println("newCustomer.getName():=" + newCustomer.getName());
+        System.out.println("customerDTO.getName():=" + customerDTO.getName());
+        System.out.println("newCustomer.getId():=" + newCustomer.getId());
+        System.out.println("retrievedCustomer.getId():=" + retrievedCustomer.getId());
         Assertions.assertEquals(newCustomer.getName(), customerDTO.getName());
         Assertions.assertEquals(newCustomer.getId(), retrievedCustomer.getId());
         Assertions.assertTrue(retrievedCustomer.getId() > 0);
     }
 
     @Test
-    public void testCreateEmployee(){
+    public void testCreateEmployee() {
         EmployeeDTO employeeDTO = createEmployeeDTO();
         EmployeeDTO newEmployee = userController.saveEmployee(employeeDTO);
         EmployeeDTO retrievedEmployee = userController.getEmployee(newEmployee.getId());
-        System.out.println("employeeDTO.getSkills():="+employeeDTO.getSkills());
-        System.out.println("newEmployee.getSkills():="+newEmployee.getSkills());
-        System.out.println("newEmployee.getId():="+newEmployee.getId());
-        System.out.println("retrievedEmployee.getId():="+retrievedEmployee.getId());
+        System.out.println("employeeDTO.getSkills():=" + employeeDTO.getSkills());
+        System.out.println("newEmployee.getSkills():=" + newEmployee.getSkills());
+        System.out.println("newEmployee.getId():=" + newEmployee.getId());
+        System.out.println("retrievedEmployee.getId():=" + retrievedEmployee.getId());
         System.out.println();
         Assertions.assertEquals(employeeDTO.getSkills(), newEmployee.getSkills());
         Assertions.assertEquals(newEmployee.getId(), retrievedEmployee.getId());
@@ -83,33 +83,33 @@ public class CritterFunctionalTest {
 
         //make sure pet contains customer id
         PetDTO retrievedPet = petController.getPet(newPet.getId());
-        System.out.println("retrievedPet:="+retrievedPet);
-        System.out.println("retrievedPet.getId():="+retrievedPet.getId());
-        System.out.println("newPet.getId():="+newPet.getId());
-        System.out.println("retrievedPet.getOwnerId():="+retrievedPet.getOwnerId());
-        System.out.println("newCustomer.getId():="+newCustomer.getId());
+        System.out.println("retrievedPet:=" + retrievedPet);
+        System.out.println("retrievedPet.getId():=" + retrievedPet.getId());
+        System.out.println("newPet.getId():=" + newPet.getId());
+        System.out.println("retrievedPet.getOwnerId():=" + retrievedPet.getOwnerId());
+        System.out.println("newCustomer.getId():=" + newCustomer.getId());
         Assertions.assertEquals(retrievedPet.getId(), newPet.getId());
         Assertions.assertEquals(retrievedPet.getOwnerId(), newCustomer.getId());
 
         //make sure you can retrieve pets by owner
 
         List<PetDTO> pets = petController.getPetsByOwner(newCustomer.getId());
-        System.out.println("pets:="+pets);
-        System.out.println("pets.get(0).getId():="+pets.get(0).getId());
-        System.out.println("newPet.getName():="+newPet.getName());
-        System.out.println("pets.get(0).getName():="+pets.get(0).getName());
+        System.out.println("pets:=" + pets);
+        System.out.println("pets.get(0).getId():=" + pets.get(0).getId());
+        System.out.println("newPet.getName():=" + newPet.getName());
+        System.out.println("pets.get(0).getName():=" + pets.get(0).getName());
         Assertions.assertEquals(newPet.getId(), pets.get(0).getId());
         Assertions.assertEquals(newPet.getName(), pets.get(0).getName());
 
         //check to make sure customer now also contains pet
 
         CustomerDTO retrievedCustomer = userController.getAllCustomers().get(0);
-        System.out.println("userController.getAllCustomers():="+userController.getAllCustomers());
-        System.out.println("retrievedCustomer:="+retrievedCustomer);
-        System.out.println("retrievedCustomer.getPetIds():="+retrievedCustomer.getPetIds());
-        System.out.println("retrievedCustomer.getPetIds().size():="+retrievedCustomer.getPetIds().size());
-        System.out.println("retrievedCustomer.getPetIds().get(0):="+retrievedCustomer.getPetIds().get(0));
-        System.out.println("retrievedPet.getId():="+retrievedPet.getId());
+        System.out.println("userController.getAllCustomers():=" + userController.getAllCustomers());
+        System.out.println("retrievedCustomer:=" + retrievedCustomer);
+        System.out.println("retrievedCustomer.getPetIds():=" + retrievedCustomer.getPetIds());
+        System.out.println("retrievedCustomer.getPetIds().size():=" + retrievedCustomer.getPetIds().size());
+        System.out.println("retrievedCustomer.getPetIds().get(0):=" + retrievedCustomer.getPetIds().get(0));
+        System.out.println("retrievedPet.getId():=" + retrievedPet.getId());
         Assertions.assertTrue(retrievedCustomer.getPetIds() != null && retrievedCustomer.getPetIds().size() > 0);
         Assertions.assertEquals(retrievedCustomer.getPetIds().get(0), retrievedPet.getId());
     }
@@ -140,7 +140,7 @@ public class CritterFunctionalTest {
         PetDTO petDTO = createPetDTO();
         petDTO.setOwnerId(newCustomer.getId());
         PetDTO newPet = petController.savePet(petDTO);
-        System.out.println("newPet.getId() in testFindOwnerByPet():="+newPet.getId());
+        System.out.println("newPet.getId() in testFindOwnerByPet():=" + newPet.getId());
         CustomerDTO owner = userController.getOwnerByPet(newPet.getId());
         Assertions.assertEquals(owner.getId(), newCustomer.getId());
         Assertions.assertEquals(owner.getPetIds().get(0), newPet.getId());
@@ -184,8 +184,8 @@ public class CritterFunctionalTest {
 
         Set<Long> eIds1 = userController.findEmployeesForService(er1).stream().map(EmployeeDTO::getId).collect(Collectors.toSet());
         Set<Long> eIds1expected = Sets.newHashSet(emp1n.getId(), emp2n.getId());
-        System.out.println("eIds1:="+eIds1);
-        System.out.println("eIds1expected:="+eIds1expected);
+        System.out.println("eIds1:=" + eIds1);
+        System.out.println("eIds1expected:=" + eIds1expected);
         Assertions.assertEquals(eIds1, eIds1expected);
 
         //make a request that matches only employee 3
@@ -211,7 +211,7 @@ public class CritterFunctionalTest {
         LocalDate date = LocalDate.of(2019, 12, 25);
         List<Long> petList = Lists.newArrayList(petDTO.getId());
         List<Long> employeeList = Lists.newArrayList(employeeDTO.getId());
-        Set<EmployeeSkill> skillSet =  Sets.newHashSet(EmployeeSkill.PETTING);
+        Set<EmployeeSkill> skillSet = Sets.newHashSet(EmployeeSkill.PETTING);
 
         scheduleController.createSchedule(createScheduleDTO(petList, employeeList, date, skillSet));
         ScheduleDTO scheduleDTO = scheduleController.getAllSchedules().get(0);
@@ -243,9 +243,9 @@ public class CritterFunctionalTest {
 
         //Employee 1 in is both schedule 1 and 3
         List<ScheduleDTO> scheds1e = scheduleController.getScheduleForEmployee(sched1.getEmployeeIds().get(0));
-        System.out.println("********************************************************************scheds1e:="+scheds1e);
-        System.out.println("********************************************************************sched1:="+sched1);
-        System.out.println("********************************************************************sched3:="+sched3);
+        System.out.println("********************************************************************scheds1e:=" + scheds1e);
+        System.out.println("********************************************************************sched1:=" + sched1);
+        System.out.println("********************************************************************sched3:=" + sched3);
         compareSchedules(sched1, scheds1e.get(0));
         compareSchedules(sched3, scheds1e.get(1));
 
@@ -279,6 +279,7 @@ public class CritterFunctionalTest {
         employeeDTO.setSkills(Sets.newHashSet(EmployeeSkill.FEEDING, EmployeeSkill.PETTING));
         return employeeDTO;
     }
+
     private static CustomerDTO createCustomerDTO() {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setName("TestEmployee");

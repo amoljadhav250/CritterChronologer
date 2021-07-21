@@ -161,12 +161,12 @@ public class UserService {
         return customer;
     }
 
-    public void setAvailability(Set<DayOfWeek> daysAvailable, long employeeId) {
+    public Employee setAvailability(Set<DayOfWeek> daysAvailable, long employeeId) {
         Optional<Employee> optionalEmployeee = employeeRepository.findById(employeeId);
         if (optionalEmployeee.isPresent()) {
             Employee employee =  optionalEmployeee.get();
             employee.setDaysAvailable(daysAvailable);
-            employeeRepository.save(employee);
+            return employeeRepository.save(employee);
         } else {
             throw new EmployeeNotFoundException("Employee with id=" + employeeId + " not found.");
         }
