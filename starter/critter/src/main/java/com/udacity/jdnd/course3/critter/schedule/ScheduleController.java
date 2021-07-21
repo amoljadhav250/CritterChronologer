@@ -97,10 +97,12 @@ public class ScheduleController {
     @GetMapping("/pet/{petId}")
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
         List<Schedule> list= userService.getScheduleForPet(petId);
+        System.out.println("list:="+list);
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
         for(Schedule s : list){
             scheduleDTOS.add(convertScheduleToSTO(s));
         }
+        System.out.println("scheduleDTOS:="+scheduleDTOS);
         return scheduleDTOS;
     }
 

@@ -208,7 +208,9 @@ public class UserService {
     }
 
     public List<Schedule> getScheduleForPet(long petId) {
+        System.out.println("Inside UserService.getScheduleForPet");
         List<Schedule> schedules= scheduleRepository.findAll();
+        System.out.println("schedules:="+schedules);
         List<Schedule> returnSchedule = new ArrayList<>();
         for(Schedule s: schedules){
             if(s.getPets().contains(petRepository.getOne(petId))){
@@ -219,7 +221,9 @@ public class UserService {
     }
 
     public List<Schedule> getScheduleForEmployee(long employeeId) {
+
         List<Schedule> schedules= scheduleRepository.findAll();
+
         List<Schedule> returnSchedule = new ArrayList<>();
         for(Schedule s: schedules){
             if(s.getEmployees().contains(employeeRepository.getOne(employeeId))){
