@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "90e63bdd-7252-4399-9a8f-e39fdbc02310",
-		"name": "Udacity - CritterChronologer Fixed",
+		"_postman_id": "d9c565d4-ba64-4b03-b3b5-1f4bd6506378",
+		"name": "Udacity",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Alex\",\r\n  \"phoneNumber\": \"1234567890\"\r\n}",
+					"raw": "{\r\n  \"name\": \"Sunil\",\r\n  \"phoneNumber\": \"1234567790\",\r\n  \"notes\":\"My pet needs help\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,7 +55,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"type\": \"CAT\",\r\n  \"name\": \"Kilo\",\r\n  \"birthDate\": \"2019-12-16T04:43:57.995Z\",\r\n  \"notes\": \"HI KILO\",\r\n  \"ownerId\": 1\r\n}",
+					"raw": "{ \r\n    \"type\": \"CAT\",\r\n    \"name\": \"Kilo\",\r\n    \"birthDate\": \"2019-12-16\",\r\n    \"notes\": \"HI KILO\",\r\n    \"ownerId\":1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -126,7 +126,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\"MONDAY\", \"TUESDAY\", \"FRIDAY\"]",
+					"raw": "[\n        \"MONDAY\", \n        \"TUESDAY\", \n        \"FRIDAY\"\n        ]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -203,7 +203,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"employeeIds\": [1],\n\t\"petIds\": [1],\n\t\"date\": \"2019-12-17\",\n\t\"activities\": [\"PETTING\", \"FEEDING\"]\n}",
+					"raw": "{\n    \"id\":1,\n    \"employeeIds\":[1],\n    \"petIds\":[1],\n    \"date\":\"2019-12-27\",\n    \"activities\":[\"PETTING\",\"FEEDING\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -226,6 +226,9 @@
 		},
 		{
 			"name": "Find Schedule By Pet",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -236,6 +239,15 @@
 						"value": "application/json"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8082/schedule/pet/1",
 					"protocol": "http",
@@ -254,6 +266,9 @@
 		},
 		{
 			"name": "Find Schedule By Employee",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -264,6 +279,15 @@
 						"value": "application/json"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8082/schedule/employee/1",
 					"protocol": "http",
@@ -282,6 +306,9 @@
 		},
 		{
 			"name": "Find Schedule By Owner",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -292,6 +319,15 @@
 						"value": "application/json"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8082/schedule/customer/1",
 					"protocol": "http",
@@ -310,6 +346,9 @@
 		},
 		{
 			"name": "Get All Customers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -320,6 +359,15 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8082/user/customer",
 					"protocol": "http",
@@ -337,6 +385,9 @@
 		},
 		{
 			"name": "Get All Pets",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -347,6 +398,15 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8082/pet",
 					"protocol": "http",
@@ -363,6 +423,9 @@
 		},
 		{
 			"name": "Get Pets By Owner",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -373,6 +436,15 @@
 						"value": "application/json"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8082/pet/owner/1",
 					"protocol": "http",
@@ -391,6 +463,9 @@
 		},
 		{
 			"name": "Get Owner By Pet",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -401,6 +476,15 @@
 						"value": "application/json"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8082/user/customer/pet/1",
 					"protocol": "http",
@@ -418,6 +502,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
